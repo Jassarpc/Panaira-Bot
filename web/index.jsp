@@ -10,6 +10,7 @@
   <head>
     <title>$Title$</title>
   </head>
+  <h1>Panaira bot Home</h1>
   <body>
   $END$
   </body>
