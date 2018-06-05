@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.restfb:restfb:2.6.0" type="repository">
+    <properties maven-id="com.restfb:restfb:2.6.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/restfb-2.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/restfb-2.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

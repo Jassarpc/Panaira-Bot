@@ -7,7 +7,7 @@
         <element id="artifact" artifact-name="panairaw" />
       </element>
       <element id="directory" name="lib">
-        <element id="library" level="project" name="com.restfb:restfb:2.5.0" />
+        <element id="library" level="project" name="com.restfb:restfb:2.6.0" />
       </element>
     </root>
   </artifact>

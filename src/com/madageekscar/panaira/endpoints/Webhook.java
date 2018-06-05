@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+
 @WebServlet("/Webhook")
 public class Webhook extends HttpServlet {
 
-    private final String ACCESS_TOKEN = "";
+    private final String ACCESS_TOKEN = "EAAdyB0buNY0BAJW9MntJRRg8HH0VZCZBIY64JEMMbV1NdPeNGZBxiuNpYpQWbVKdGfZBWx8NPi7ZBwASg1o7S2zFOs28rHxyppCqnSzIZCcTB1vo61zkkFtspnYHDN0xDecuGxgvnrVNtfrxR4wVWEFZAKhKpI07uKnZAtY0RaMa3gZDZD";
     private final String VERIFY_TOKEN = "panairabot";
 
     @Override
@@ -76,11 +77,13 @@ public class Webhook extends HttpServlet {
                     String senderId = item.getSender().getId();
                     IdMessageRecipient id = new IdMessageRecipient(senderId);
                     if (item.getMessage() != null && item.getMessage().getText() != null) {
-
+                        sendMessage(id, new Message());
                     }
                 }
             }
         }
+
+        resp.setStatus(200);
         super.doPost(req, resp);
     }
 
@@ -88,6 +91,18 @@ public class Webhook extends HttpServlet {
         FacebookClient fbClient = new DefaultFacebookClient(ACCESS_TOKEN, Version.VERSION_2_6);
         SendResponse sendResponse = fbClient.publish("me/messages",
                 SendResponse.class, Parameter.with("recipient", idMR), Parameter.with("message", message));
+
+    }
+
+    public void handleMessage() {
+
+    }
+
+    public void handlePostBack() {
+
+    }
+
+    public void callSendAPI() {
 
     }
 }
