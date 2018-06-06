@@ -4,12 +4,10 @@ import com.restfb.*;
 import com.restfb.types.GraphResponse;
 import com.restfb.types.send.IdMessageRecipient;
 import com.restfb.types.send.Message;
-import com.restfb.types.send.SendResponse;
 import com.restfb.types.webhook.WebhookEntry;
 import com.restfb.types.webhook.WebhookObject;
 import com.restfb.types.webhook.messaging.MessagingItem;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +22,7 @@ public class Webhook extends HttpServlet {
     private final String VERIFY_TOKEN = "panairabot";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Parse the query params
         String mode = req.getParameter("hub.mode");
         String token = req.getParameter("hub.verify_token");
@@ -43,19 +41,8 @@ public class Webhook extends HttpServlet {
             resp.setStatus(200);
             resp.getWriter().write("TOKEN VERIFICATION FAILED!");
         }
-
-        super.doGet(req, resp);
     }
 
-    private void do_flush(HttpServletResponse resp) {
-        try {
-            resp.getWriter().flush();
-            resp.getWriter().close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -68,36 +55,32 @@ public class Webhook extends HttpServlet {
                 for (MessagingItem item : entry.getMessaging()) {
                     String senderId = item.getSender().getId();
                     IdMessageRecipient recipient = new IdMessageRecipient(senderId);
-                    if (item.getMessage() != null && item.getMessage().getText() != null) {
-                        Message simpleTextMessage = new Message("Echo: " + item.getMessage().getText());
-                        FacebookClient sendClient = new DefaultFacebookClient(ACCESS_TOKEN, Version.VERSION_2_6);
-                        sendClient.publish("me/messages", GraphResponse.class, Parameter.with("recipient", recipient),
-                                Parameter.with("message", simpleTextMessage));
+                    //gestion des message
+                    if (item.getMessage() != null) { // message
+                        if (item.getMessage().getText() != null) { //si texte
+                            Message message = new Message("Echo: " + item.getMessage().getText());
+                            sendMessage(recipient, message);
+                        } else if (item.getMessage().hasAttachment()) {
+                            Message message = new Message("mbola ts mahay mandefa webviex za babalah e");
+                            sendMessage(recipient, message);
+
+                        }
                     }
 
+                    //gestion des payloads
                     if (item.getPostback() != null) {
+                        Message simpleTextMessage = new Message("Yesaya : " + item.getPostback().getPayload());
+                        sendMessage(recipient, simpleTextMessage);
                     }
+
                 }
             }
         }
     }
 
     public void sendMessage(IdMessageRecipient idMR, Message message) {
-        FacebookClient fbClient = new DefaultFacebookClient(ACCESS_TOKEN, Version.VERSION_2_6);
-        SendResponse sendResponse = fbClient.publish("me/messages",
-                SendResponse.class, Parameter.with("recipient", idMR), Parameter.with("message", message));
-
-    }
-
-    public void handleMessage() {
-
-    }
-
-    public void handlePostBack() {
-
-    }
-
-    public void callSendAPI() {
-
+        FacebookClient sendClient = new DefaultFacebookClient(ACCESS_TOKEN, Version.VERSION_2_6);
+        sendClient.publish("me/messages", GraphResponse.class, Parameter.with("recipient", idMR),
+                Parameter.with("message", message));
     }
 }
