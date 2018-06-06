@@ -1,8 +1,9 @@
 package com.madageekscar.panaira.endpoints;
 
 import com.restfb.*;
-import com.restfb.types.Message;
+import com.restfb.types.GraphResponse;
 import com.restfb.types.send.IdMessageRecipient;
+import com.restfb.types.send.Message;
 import com.restfb.types.send.SendResponse;
 import com.restfb.types.webhook.WebhookEntry;
 import com.restfb.types.webhook.WebhookObject;
@@ -13,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 
@@ -30,7 +30,6 @@ public class Webhook extends HttpServlet {
         String token = req.getParameter("hub.verify_token");
         String challenge = req.getParameter("hub.challenge");
         if (mode != null && token != null) {
-
             // Checks the mode and token sent is correct
             if (mode.equals("subscribe") && token.equals(VERIFY_TOKEN)) {
                 resp.setStatus(200);
@@ -44,7 +43,7 @@ public class Webhook extends HttpServlet {
             resp.setStatus(200);
             resp.getWriter().write("TOKEN VERIFICATION FAILED!");
         }
-        do_flush(resp);
+
         super.doGet(req, resp);
     }
 
@@ -59,32 +58,28 @@ public class Webhook extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuffer bf = new StringBuffer();
-        BufferedReader readBf = req.getReader();
-        String line = "";
-        while ((line = readBf.readLine()) != null) {
-            bf.append(line);
-        }
-
-        JsonMapper mapper = new DefaultJsonMapper();
-        WebhookObject webhookObject = mapper.toJavaObject(bf.toString(), WebhookObject.class);
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String body = req.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
+        DefaultJsonMapper mapper = new DefaultJsonMapper();
+        WebhookObject webhookObject = mapper.toJavaObject(body, WebhookObject.class);
 
         for (WebhookEntry entry : webhookObject.getEntryList()) {
-            if (entry.getMessaging() != null) {
+            if (!entry.getMessaging().isEmpty()) {
                 for (MessagingItem item : entry.getMessaging()) {
                     String senderId = item.getSender().getId();
-                    IdMessageRecipient id = new IdMessageRecipient(senderId);
+                    IdMessageRecipient recipient = new IdMessageRecipient(senderId);
                     if (item.getMessage() != null && item.getMessage().getText() != null) {
-                        sendMessage(id, new Message());
+                        Message simpleTextMessage = new Message("Echo: " + item.getMessage().getText());
+                        FacebookClient sendClient = new DefaultFacebookClient(ACCESS_TOKEN, Version.VERSION_2_6);
+                        sendClient.publish("me/messages", GraphResponse.class, Parameter.with("recipient", recipient),
+                                Parameter.with("message", simpleTextMessage));
+                    }
+
+                    if (item.getPostback() != null) {
                     }
                 }
             }
         }
-
-        resp.setStatus(200);
-        super.doPost(req, resp);
     }
 
     public void sendMessage(IdMessageRecipient idMR, Message message) {
