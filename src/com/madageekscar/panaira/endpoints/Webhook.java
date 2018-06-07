@@ -1,9 +1,9 @@
 package com.madageekscar.panaira.endpoints;
 
+import com.madageekscar.panaira.searchengine.GoogleSearch;
 import com.restfb.*;
 import com.restfb.types.GraphResponse;
-import com.restfb.types.send.IdMessageRecipient;
-import com.restfb.types.send.Message;
+import com.restfb.types.send.*;
 import com.restfb.types.webhook.WebhookEntry;
 import com.restfb.types.webhook.WebhookObject;
 import com.restfb.types.webhook.messaging.MessagingItem;
@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @WebServlet("/Webhook")
@@ -55,22 +57,46 @@ public class Webhook extends HttpServlet {
                 for (MessagingItem item : entry.getMessaging()) {
                     String senderId = item.getSender().getId();
                     IdMessageRecipient recipient = new IdMessageRecipient(senderId);
+
                     //gestion des message
-                    if (item.getMessage() != null) { // message
-                        if (item.getMessage().getText() != null) { //si texte
-                            Message message = new Message("Echo: " + item.getMessage().getText());
-                            sendMessage(recipient, message);
-                        } else if (item.getMessage().hasAttachment()) {
-                            Message message = new Message("mbola ts mahay mandefa webviex za babalah e");
-                            sendMessage(recipient, message);
+                    if (item.getMessage() != null) {
+
+                        if (item.getMessage().getText() != null) {
+
+                            Message message = new Message(item.getMessage().getText());
+                            String keyword = message.getText();
+
+                            if (keyword.contains("hey panaira")) {
+                                showChoicesTemplate(recipient);
+                            } else {
+                                showGoogleSearchResults(recipient, GoogleSearch.search(keyword, 5));
+                            }
+
+
+
 
                         }
                     }
 
                     //gestion des payloads
                     if (item.getPostback() != null) {
-                        Message simpleTextMessage = new Message("Yesaya : " + item.getPostback().getPayload());
-                        sendMessage(recipient, simpleTextMessage);
+
+                        String payload = item.getPostback().getPayload();
+
+                        if (payload.contains("GET_STARTED")) {
+                            showChoicesTemplate(recipient);
+
+                        }else if (payload.contains("GOOGLE_SEARCH")) {
+                            Message message = new Message("Ohh Google Search Triggered! My boss is " +
+                                    "implementing this feature. Be patient");
+                            sendMessage(recipient, message);
+                        }
+                        else if (payload.contains("YOUTUBE_SEARCH")) {
+                            Message message = new Message("Ohh Youtube Search Triggered! My boss is " +
+                                    "implementing this feature. Be patient");
+                            sendMessage(recipient, message);
+                        }
+
                     }
 
                 }
@@ -82,5 +108,42 @@ public class Webhook extends HttpServlet {
         FacebookClient sendClient = new DefaultFacebookClient(ACCESS_TOKEN, Version.VERSION_2_6);
         sendClient.publish("me/messages", GraphResponse.class, Parameter.with("recipient", idMR),
                 Parameter.with("message", message));
+    }
+
+    private void showChoicesTemplate(IdMessageRecipient recipient) {
+
+        ButtonTemplatePayload payload = new ButtonTemplatePayload("What do you want ?");
+        PostbackButton googleButton = new PostbackButton("GOOGLE SEARCH", "GOOGLE_SEARCH");
+        PostbackButton youtubeButton = new PostbackButton("YOUTUBE SEARCH", "YOUTUBE_SEARCH");
+
+        payload.addButton(googleButton);
+        payload.addButton(youtubeButton);
+
+        TemplateAttachment templateAttachment = new TemplateAttachment(payload);
+        Message imageMessage = new Message(templateAttachment);
+
+        sendMessage(recipient, imageMessage);
+    }
+
+    private void showGoogleSearchResults(IdMessageRecipient recipient, Map<String, String> results) {
+
+
+        WebButton btn;
+
+        ButtonTemplatePayload payload = new ButtonTemplatePayload("SEARCH RESULTS");
+
+        for (Map.Entry<String, String> entry : results.entrySet()) {
+
+            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            btn = new WebButton(entry.getKey(), entry.getValue());
+            payload.addButton(btn);
+        }
+
+        TemplateAttachment templateAttachment = new TemplateAttachment(payload);
+        Message message = new Message(templateAttachment);
+
+        sendMessage(recipient, message);
+
+
     }
 }
