@@ -28,9 +28,9 @@ public class GoogleSearch {
             for (Element result : results) {
                 String linkHref = result.attr("href");
                 String linkText = result.text();
-                System.out.println("Text::" + linkText + ", URL::" + linkHref.substring(5, linkHref.indexOf("&")));
+               // System.out.println("Text::" + linkText + ", URL::" + linkHref.substring(7, linkHref.indexOf("&")));
 
-                searchResults.put(linkText, linkHref.substring(6, linkHref.indexOf("&")));
+                searchResults.put(linkText, linkHref.substring(7, linkHref.indexOf("&")));
             }
 
         } catch (IOException e) {

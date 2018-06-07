@@ -69,7 +69,7 @@ public class Webhook extends HttpServlet {
                             if (keyword.contains("hey panaira")) {
                                 showChoicesTemplate(recipient);
                             } else {
-                                showGoogleSearchResults(recipient, GoogleSearch.search(keyword, 5));
+                                googleResults(recipient, GoogleSearch.search(keyword, 10));
                             }
 
 
@@ -144,6 +144,33 @@ public class Webhook extends HttpServlet {
 
         sendMessage(recipient, message);
 
+       WebviewHeightEnum webviewHeightEnum;
+
+
+    }
+
+    private void googleResults(IdMessageRecipient recipient, Map<String, String> results) {
+
+        GenericTemplatePayload payload = new GenericTemplatePayload();
+
+        Bubble resultBubble;
+        WebButton webButton;
+
+        for (Map.Entry<String, String> entry : results.entrySet()) {
+
+            if(entry.getValue().contains("http")) {
+                System.out.println("Titre : " + entry.getKey() + " Lien : " + entry.getValue());
+                resultBubble = new Bubble(entry.getKey());
+                webButton = new WebButton("View", entry.getValue());
+
+                resultBubble.addButton(webButton);
+                payload.addBubble(resultBubble);
+            }
+        }
+
+        TemplateAttachment templateAttachment = new TemplateAttachment(payload);
+        Message message = new Message(templateAttachment);
+        sendMessage(recipient, message);
 
     }
 }
