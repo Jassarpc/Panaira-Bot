@@ -1,9 +1,13 @@
 package com.madageekscar.panaira.endpoints;
 
+import com.madageekscar.panaira.results.GoogleResult;
+import com.madageekscar.panaira.results.YoutubeResult;
 import com.madageekscar.panaira.searchengine.GoogleSearch;
+import com.madageekscar.panaira.searchengine.YoutubeSearch;
 import com.restfb.*;
 import com.restfb.types.GraphResponse;
 import com.restfb.types.send.*;
+import com.restfb.types.send.media.MediaTemplateAttachmentElement;
 import com.restfb.types.webhook.WebhookEntry;
 import com.restfb.types.webhook.WebhookObject;
 import com.restfb.types.webhook.messaging.MessagingItem;
@@ -13,8 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 
 @WebServlet("/Webhook")
@@ -66,14 +70,23 @@ public class Webhook extends HttpServlet {
                             Message message = new Message(item.getMessage().getText());
                             String keyword = message.getText();
 
+
                             if (keyword.contains("hey panaira")) {
-                                showChoicesTemplate(recipient);
-                            } else {
-                                googleResults(recipient, GoogleSearch.search(keyword, 10));
+
+                              showStartMessage(recipient);
+
+                            }else if(keyword.contains("youtube")) {
+                                keyword = keyword.substring(7);
+                                System.out.println("YOUTUBE KEYWORD ===>" + keyword);
+
+                                showYoutubeResults(recipient, YoutubeSearch.search(keyword));
+
+                                //notImplementedYet(recipient, "YOUTUBE KO" +" => " + keyword);
                             }
-
-
-
+                            else {
+                                showGoogleResults(recipient, GoogleSearch.search(keyword, 10));
+                                //notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
+                            }
 
                         }
                     }
@@ -84,17 +97,14 @@ public class Webhook extends HttpServlet {
                         String payload = item.getPostback().getPayload();
 
                         if (payload.contains("GET_STARTED")) {
-                            showChoicesTemplate(recipient);
+                            showStartMessage(recipient);
 
                         }else if (payload.contains("GOOGLE_SEARCH")) {
-                            Message message = new Message("Ohh Google Search Triggered! My boss is " +
-                                    "implementing this feature. Be patient");
-                            sendMessage(recipient, message);
+                           notImplementedYet(recipient, "\"Ohh Google Search Triggered! My boss is \" +\n" +
+                                   "                \"implementing this feature. Be patient");
                         }
                         else if (payload.contains("YOUTUBE_SEARCH")) {
-                            Message message = new Message("Ohh Youtube Search Triggered! My boss is " +
-                                    "implementing this feature. Be patient");
-                            sendMessage(recipient, message);
+                           notImplementedYet(recipient, "Youtube Search NOT implemented yest");
                         }
 
                     }
@@ -110,6 +120,15 @@ public class Webhook extends HttpServlet {
                 Parameter.with("message", message));
     }
 
+    private void showStartMessage(IdMessageRecipient recipient) {
+        String guide = "Just give a keyword to perform a google search\n" +
+                "For youtube search, put 'youtube' before your keyword. eg: " +
+                "youtube world cup russia";
+
+        Message startMessage = new Message(guide);
+        sendMessage(recipient, startMessage);
+    }
+
     private void showChoicesTemplate(IdMessageRecipient recipient) {
 
         ButtonTemplatePayload payload = new ButtonTemplatePayload("What do you want ?");
@@ -122,46 +141,24 @@ public class Webhook extends HttpServlet {
         TemplateAttachment templateAttachment = new TemplateAttachment(payload);
         Message imageMessage = new Message(templateAttachment);
 
+
         sendMessage(recipient, imageMessage);
     }
 
-    private void showGoogleSearchResults(IdMessageRecipient recipient, Map<String, String> results) {
 
-
-        WebButton btn;
-
-        ButtonTemplatePayload payload = new ButtonTemplatePayload("SEARCH RESULTS");
-
-        for (Map.Entry<String, String> entry : results.entrySet()) {
-
-            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-            btn = new WebButton(entry.getKey(), entry.getValue());
-            payload.addButton(btn);
-        }
-
-        TemplateAttachment templateAttachment = new TemplateAttachment(payload);
-        Message message = new Message(templateAttachment);
-
-        sendMessage(recipient, message);
-
-       WebviewHeightEnum webviewHeightEnum;
-
-
-    }
-
-    private void googleResults(IdMessageRecipient recipient, Map<String, String> results) {
+    private void showGoogleResults(IdMessageRecipient recipient, List<GoogleResult> results) {
 
         GenericTemplatePayload payload = new GenericTemplatePayload();
 
         Bubble resultBubble;
         WebButton webButton;
 
-        for (Map.Entry<String, String> entry : results.entrySet()) {
+        for (GoogleResult g : results) {
 
-            if(entry.getValue().contains("http")) {
-                System.out.println("Titre : " + entry.getKey() + " Lien : " + entry.getValue());
-                resultBubble = new Bubble(entry.getKey());
-                webButton = new WebButton("View", entry.getValue());
+            if(g.getUrl().contains("http")) {
+                System.out.println("Titre : " + g.getTitle() + " Lien : " + g.getUrl());
+                resultBubble = new Bubble(g.getTitle());
+                webButton = new WebButton("View", g.getUrl());
 
                 resultBubble.addButton(webButton);
                 payload.addBubble(resultBubble);
@@ -173,4 +170,60 @@ public class Webhook extends HttpServlet {
         sendMessage(recipient, message);
 
     }
+
+
+    private void showYoutubeResults(IdMessageRecipient recipient, List<YoutubeResult> results) {
+        GenericTemplatePayload payload = new GenericTemplatePayload();
+
+        Bubble resultBubble;
+        WebButton webButton;
+
+        for (YoutubeResult y : results) {
+
+            if(y.getVideoUrl().contains("http")) {
+                System.out.println("Title => " + y.getVideoTitle());
+                System.out.println("Url => " + y.getVideoUrl());
+                System.out.println("Thumbnail => " + y.getVideoThumbnail());
+                System.out.println("=============================================");
+
+                resultBubble = new Bubble(y.getVideoTitle());
+                webButton = new WebButton("Watch", y.getVideoUrl());
+
+                resultBubble.addButton(webButton);
+                payload.addBubble(resultBubble);
+            }
+        }
+
+        TemplateAttachment templateAttachment = new TemplateAttachment(payload);
+        Message message = new Message(templateAttachment);
+        sendMessage(recipient, message);
+    }
+
+
+    private void showImageTemplate(IdMessageRecipient recipient) {
+
+        WebButton button = new WebButton("Baobab", "https://ophiris.com/assets/images/tours/baobab_alley.jpg");
+
+        MediaAttachment.MediaTemplateElement mediaTemplateElement =
+                new MediaTemplateAttachmentElement(MediaAttachment.MediaType.IMAGE, "2106717722947366");
+
+        mediaTemplateElement.addButton(button);
+
+        // the MediaAttachment contains a list of MediaTemplateElement
+        MediaAttachment attachment = new MediaAttachment(Collections.singletonList(mediaTemplateElement));
+        Message imgMsg = new Message(attachment);
+
+        sendMessage(recipient, imgMsg);
+
+    }
+
+
+    private void notImplementedYet(IdMessageRecipient recipient, String text ) {
+
+        Message message = new Message(text);
+        sendMessage(recipient, message);
+
+    }
+
+
 }
