@@ -84,8 +84,8 @@ public class Webhook extends HttpServlet {
                                 //notImplementedYet(recipient, "YOUTUBE KO" +" => " + keyword);
                             }
                             else {
-                                showGoogleResults(recipient, GoogleSearch.search(keyword, 10));
-                                //notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
+                                //showGoogleResults(recipient, GoogleSearch.search(keyword, 10));
+                                notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
                             }
 
                         }
@@ -161,6 +161,8 @@ public class Webhook extends HttpServlet {
                 webButton = new WebButton("View", g.getUrl());
 
                 resultBubble.addButton(webButton);
+                webButton = new WebButton("GET", g.getUrl());
+                resultBubble.addButton(webButton);
                 payload.addBubble(resultBubble);
             }
         }
@@ -189,6 +191,10 @@ public class Webhook extends HttpServlet {
                 resultBubble = new Bubble(y.getVideoTitle());
                 webButton = new WebButton("Watch", y.getVideoUrl());
 
+                resultBubble.addButton(webButton);
+                webButton = new WebButton("GET", y.getVideoUrl());
+                resultBubble.setSubtitle("Lorem ipsum dolor sit ame consecutar");
+                resultBubble.setImageUrl(y.getVideoThumbnail());
                 resultBubble.addButton(webButton);
                 payload.addBubble(resultBubble);
             }
