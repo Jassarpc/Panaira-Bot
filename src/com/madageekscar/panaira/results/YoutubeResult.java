@@ -6,13 +6,15 @@ public class YoutubeResult {
     private String videoTitle;
     private String videoUrl;
     private String videoThumbnail;
+    private String videoDesc;
 
-    public YoutubeResult(String id, String title, String thumbnail) {
+    public YoutubeResult(String id, String title, String thumbnail, String description) {
 
         setVideoId(id);
         setVideoTitle(title);
         setVideoUrl(formatVideoUrl());
         setVideoThumbnail(thumbnail);
+        setVideoDesc(description);
 
     }
 
@@ -40,6 +42,14 @@ public class YoutubeResult {
         this.videoUrl = videoUrl;
     }
 
+    public String getVideoDesc() {
+        return videoDesc;
+    }
+
+    public void setVideoDesc(String videoDesc) {
+        this.videoDesc = videoDesc;
+    }
+
     public String getVideoThumbnail() {
         return videoThumbnail;
     }
@@ -47,6 +57,8 @@ public class YoutubeResult {
     public void setVideoThumbnail(String videoThumbnail) {
         this.videoThumbnail = videoThumbnail;
     }
+
+
 
     private String formatVideoUrl() {
         return "https://www.youtube.com/watch?v=" + videoId;

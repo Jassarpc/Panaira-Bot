@@ -73,7 +73,7 @@ public class Webhook extends HttpServlet {
 
                             if (keyword.contains("hey panaira")) {
                                 showStartMessage(recipient);
-                                //testWebview(recipient);
+
 
                             }else if(keyword.contains("youtube")) {
                                 keyword = keyword.substring(7);
@@ -84,8 +84,8 @@ public class Webhook extends HttpServlet {
                                 //notImplementedYet(recipient, "YOUTUBE KO" +" => " + keyword);
                             }
                             else {
-                                //showGoogleResults(recipient, GoogleSearch.search(keyword, 10));
-                                notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
+                                showGoogleResults(recipient, GoogleSearch.search(keyword, 10));
+                                //notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
                             }
 
                         }
@@ -158,10 +158,9 @@ public class Webhook extends HttpServlet {
             if(g.getUrl().contains("http")) {
                 System.out.println("Titre : " + g.getTitle() + " Lien : " + g.getUrl());
                 resultBubble = new Bubble(g.getTitle());
+                resultBubble.setImageUrl("https://lazandraha.com/google-logo.jpg");
                 webButton = new WebButton("View", g.getUrl());
 
-                resultBubble.addButton(webButton);
-                webButton = new WebButton("GET", g.getUrl());
                 resultBubble.addButton(webButton);
                 payload.addBubble(resultBubble);
             }
@@ -190,11 +189,18 @@ public class Webhook extends HttpServlet {
 
                 resultBubble = new Bubble(y.getVideoTitle());
                 webButton = new WebButton("Watch", y.getVideoUrl());
-
+                webButton.setWebviewHeightRatio(WebviewHeightEnum.compact);
+                webButton.setMessengerExtensions(true, y.getVideoUrl());
                 resultBubble.addButton(webButton);
-                webButton = new WebButton("GET", y.getVideoUrl());
-                resultBubble.setSubtitle("Lorem ipsum dolor sit ame consecutar");
+
+
+                webButton = new WebButton("Download", y.getVideoUrl());
+
+
+                resultBubble.setSubtitle(y.getVideoDesc());
                 resultBubble.setImageUrl(y.getVideoThumbnail());
+
+
                 resultBubble.addButton(webButton);
                 payload.addBubble(resultBubble);
             }
@@ -212,9 +218,9 @@ public class Webhook extends HttpServlet {
 
         ButtonTemplatePayload payload = new ButtonTemplatePayload("What do you want ?");
 
-        WebButton btn = new WebButton("Open WebView", null);
+        WebButton btn = new WebButton("Open WebView", "https://openclassrooms.com");
         btn.setWebviewHeightRatio(WebviewHeightEnum.compact);
-        btn.setMessengerExtensions(true, "https://google.com");
+        btn.setMessengerExtensions(true, btn.getUrl());
 
         payload.addButton(btn);
 
