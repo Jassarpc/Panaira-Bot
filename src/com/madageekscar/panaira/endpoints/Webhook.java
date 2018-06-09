@@ -4,6 +4,7 @@ import com.madageekscar.panaira.results.GoogleResult;
 import com.madageekscar.panaira.results.YoutubeResult;
 import com.madageekscar.panaira.searchengine.GoogleSearch;
 import com.madageekscar.panaira.searchengine.YoutubeSearch;
+import com.pdfcrowd.Pdfcrowd;
 import com.restfb.*;
 import com.restfb.types.GraphResponse;
 import com.restfb.types.send.*;
@@ -84,7 +85,7 @@ public class Webhook extends HttpServlet {
                                 //notImplementedYet(recipient, "YOUTUBE KO" +" => " + keyword);
                             }
                             else {
-                                showGoogleResults(recipient, GoogleSearch.search(keyword, 10));
+                                showGoogleResults(recipient, GoogleSearch.search(keyword, 2));
                                 //notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
                             }
 
@@ -161,6 +162,8 @@ public class Webhook extends HttpServlet {
                 resultBubble.setImageUrl("https://lazandraha.com/google-logo.jpg");
                 webButton = new WebButton("View", g.getUrl());
 
+                getPdfFromGoogleSearch(g.getUrl());
+
                 resultBubble.addButton(webButton);
                 payload.addBubble(resultBubble);
             }
@@ -233,6 +236,29 @@ public class Webhook extends HttpServlet {
 
 
     }
+
+    private void getPdfFromGoogleSearch(String url)  {
+        try {
+            // create the API client instance
+            Pdfcrowd.HtmlToPdfClient client = new Pdfcrowd.HtmlToPdfClient("nichiren", "5a192975363581bcf8df30f574be14f6 ");
+
+            // run the conversion and write the result to a file
+            client.convertUrlToFile(url, "/example.pdf");
+        }
+        catch(Pdfcrowd.Error why) {
+            // report the error
+            System.err.println("Pdfcrowd Error: " + why);
+
+            // handle the exception here or rethrow and handle it at a higher level
+            throw why;
+        }
+        catch(IOException why) {
+            // report the error
+            System.err.println("IO Error: " + why.getMessage());
+
+        }
+    }
+
 
 
     private void notImplementedYet(IdMessageRecipient recipient, String text ) {
