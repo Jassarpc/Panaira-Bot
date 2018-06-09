@@ -72,8 +72,8 @@ public class Webhook extends HttpServlet {
 
 
                             if (keyword.contains("hey panaira")) {
-
-                              showStartMessage(recipient);
+                                showStartMessage(recipient);
+                                //testWebview(recipient);
 
                             }else if(keyword.contains("youtube")) {
                                 keyword = keyword.substring(7);
@@ -200,20 +200,25 @@ public class Webhook extends HttpServlet {
     }
 
 
-    private void showImageTemplate(IdMessageRecipient recipient) {
 
-        WebButton button = new WebButton("Baobab", "https://ophiris.com/assets/images/tours/baobab_alley.jpg");
 
-        MediaAttachment.MediaTemplateElement mediaTemplateElement =
-                new MediaTemplateAttachmentElement(MediaAttachment.MediaType.IMAGE, "2106717722947366");
+    private void testWebview(IdMessageRecipient recipient) {
 
-        mediaTemplateElement.addButton(button);
+        ButtonTemplatePayload payload = new ButtonTemplatePayload("What do you want ?");
 
-        // the MediaAttachment contains a list of MediaTemplateElement
-        MediaAttachment attachment = new MediaAttachment(Collections.singletonList(mediaTemplateElement));
-        Message imgMsg = new Message(attachment);
+        WebButton btn = new WebButton("Open WebView", null);
+        btn.setWebviewHeightRatio(WebviewHeightEnum.compact);
+        btn.setMessengerExtensions(true, "https://google.com");
 
-        sendMessage(recipient, imgMsg);
+        payload.addButton(btn);
+
+        TemplateAttachment templateAttachment = new TemplateAttachment(payload);
+        Message imageMessage = new Message(templateAttachment);
+
+
+        sendMessage(recipient, imageMessage);
+
+
 
     }
 
