@@ -40,5 +40,6 @@
     <orderEntry type="library" name="org.jsoup:jsoup:1.11.3" level="project" />
     <orderEntry type="library" name="com.google.api-client:google-api-client:1.23.0" level="project" />
     <orderEntry type="library" name="google-api-services-youtube-v3-rev198-1.23.0" level="project" />
+    <orderEntry type="library" name="servlet-api" level="project" />
   </component>
 </module>
