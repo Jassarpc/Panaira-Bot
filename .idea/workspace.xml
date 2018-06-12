@@ -7,11 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="903dc24f-df05-4957-b6d6-d9d75c761fa4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_pdfcrowd_pdfcrowd_4_3_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/ApiTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/madageekscar/panaira/utils/LinkFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/com_pdfcrowd_pdfcrowd_4_3_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/com_pdfcrowd_pdfcrowd_4_3_2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Panaira-Bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Panaira-Bot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Panaira_Bot_war_exploded/WEB-INF/lib/com.android.volley-2015.05.28-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Panaira_Bot_war_exploded/WEB-INF/lib/com.android.volley-2015.05.28.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Panaira_Bot_war_exploded/WEB-INF/classes/com/madageekscar/panaira/endpoints/Webhook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Panaira_Bot_war_exploded/WEB-INF/classes/com/madageekscar/panaira/endpoints/Webhook.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Panaira-Bot/com/madageekscar/panaira/endpoints/Webhook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Panaira-Bot/com/madageekscar/panaira/endpoints/Webhook.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/madageekscar/panaira/endpoints/Webhook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/madageekscar/panaira/endpoints/Webhook.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,11 +29,25 @@
       <file leaf-file-name="Webhook.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/endpoints/Webhook.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="245" column="43" selection-start-line="245" selection-start-column="43" selection-end-line="245" selection-end-column="43" />
+            <state relative-caret-position="135">
+              <caret line="89" column="32" lean-forward="true" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
               <folding>
                 <element signature="method#showChoicesTemplate#0;class#Webhook#0" />
+                <element signature="method#showYoutubeResults#0;class#Webhook#0" />
+                <element signature="method#testWebview#0;class#Webhook#0" />
                 <element signature="method#notImplementedYet#0;class#Webhook#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LinkFetcher.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/utils/LinkFetcher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="14" column="43" lean-forward="true" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -40,7 +56,7 @@
       <file leaf-file-name="YoutubeSearch.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/YoutubeSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="915">
               <caret line="78" column="84" selection-start-line="78" selection-start-column="84" selection-end-line="78" selection-end-column="84" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -81,6 +97,8 @@
         <option value="$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/YoutubeTest.java" />
         <option value="$PROJECT_DIR$/src/com/madageekscar/panaira/results/YoutubeResult.java" />
         <option value="$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/YoutubeSearch.java" />
+        <option value="$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/ApiTest.java" />
+        <option value="$PROJECT_DIR$/src/com/madageekscar/panaira/utils/LinkFetcher.java" />
         <option value="$PROJECT_DIR$/src/com/madageekscar/panaira/endpoints/Webhook.java" />
       </list>
     </option>
@@ -119,7 +137,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -133,10 +150,24 @@
               <item name="Panaira-Bot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Panaira-Bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Panaira-Bot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="panaira" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Panaira-Bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Panaira-Bot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="panaira" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -174,6 +205,17 @@
     </option>
   </component>
   <component name="RunManager" selected="Tomcat Server.Panaira">
+    <configuration name="ApiTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.madageekscar.panaira.searchengine.ApiTest" />
+      <module name="Panaira-Bot" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.madageekscar.panaira.searchengine.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration name="GoogleSearch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.madageekscar.panaira.searchengine.GoogleSearch" />
       <module name="Panaira-Bot" />
@@ -336,9 +378,11 @@
       <item itemvalue="Application.YoutubeSearch" />
       <item itemvalue="Application.YoutubeSearchDraft" />
       <item itemvalue="Application.YoutubeTest" />
+      <item itemvalue="Application.ApiTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ApiTest" />
         <item itemvalue="Application.YoutubeTest" />
         <item itemvalue="Application.YoutubeSearchDraft" />
         <item itemvalue="Application.YoutubeSearch" />
@@ -365,7 +409,9 @@
       <workItem from="1528443163225" duration="4769000" />
       <workItem from="1528455262397" duration="7193000" />
       <workItem from="1528541521494" duration="5046000" />
-      <workItem from="1528558519575" duration="2913000" />
+      <workItem from="1528558519575" duration="4661000" />
+      <workItem from="1528636919308" duration="4592000" />
+      <workItem from="1528802367075" duration="2691000" />
     </task>
     <task id="LOCAL-00001" summary="Panaira Run on LocalHost">
       <created>1528304585512</created>
@@ -385,10 +431,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74237000" />
+    <option name="totallyTimeSpent" value="83268000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1419" y="-4" width="1313" height="772" extended-state="6" />
+    <frame x="1419" y="24" width="1313" height="744" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50039464" side_tool="true" weight="0.32605305" />
@@ -409,9 +455,9 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.32917318" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960536" visible="true" weight="0.32605305" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49960536" visible="true" weight="0.36193448" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32917318" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49921995" visible="true" weight="0.2896606" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49921995" visible="true" weight="0.2991318" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="JavaEE:App" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -474,24 +520,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Panaira-Bot.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/endpoints/Webhook.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="84" column="22" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Panaira-Bot.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -632,6 +664,8 @@
           <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
           <folding>
             <element signature="method#showChoicesTemplate#0;class#Webhook#0" />
+            <element signature="method#showYoutubeResults#0;class#Webhook#0" />
+            <element signature="method#testWebview#0;class#Webhook#0" />
             <element signature="method#notImplementedYet#0;class#Webhook#0" />
           </folding>
         </state>
@@ -643,6 +677,8 @@
           <caret line="78" column="56" selection-start-line="78" selection-start-column="56" selection-end-line="78" selection-end-column="56" />
           <folding>
             <element signature="method#showChoicesTemplate#0;class#Webhook#0" />
+            <element signature="method#showYoutubeResults#0;class#Webhook#0" />
+            <element signature="method#testWebview#0;class#Webhook#0" />
             <element signature="method#notImplementedYet#0;class#Webhook#0" />
           </folding>
         </state>
@@ -665,6 +701,8 @@
           <caret line="86" column="63" lean-forward="true" selection-start-line="86" selection-start-column="63" selection-end-line="86" selection-end-column="63" />
           <folding>
             <element signature="method#showChoicesTemplate#0;class#Webhook#0" />
+            <element signature="method#showYoutubeResults#0;class#Webhook#0" />
+            <element signature="method#testWebview#0;class#Webhook#0" />
             <element signature="method#notImplementedYet#0;class#Webhook#0" />
           </folding>
         </state>
@@ -815,7 +853,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/YoutubeSearch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="915">
           <caret line="78" column="84" selection-start-line="78" selection-start-column="84" selection-end-line="78" selection-end-column="84" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -824,12 +862,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/searchengine/ApiTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="54" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/utils/LinkFetcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="14" column="43" lean-forward="true" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/madageekscar/panaira/endpoints/Webhook.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="245" column="43" selection-start-line="245" selection-start-column="43" selection-end-line="245" selection-end-column="43" />
+        <state relative-caret-position="135">
+          <caret line="89" column="32" lean-forward="true" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
           <folding>
             <element signature="method#showChoicesTemplate#0;class#Webhook#0" />
+            <element signature="method#showYoutubeResults#0;class#Webhook#0" />
+            <element signature="method#testWebview#0;class#Webhook#0" />
             <element signature="method#notImplementedYet#0;class#Webhook#0" />
           </folding>
         </state>
@@ -913,7 +973,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>com.pdfcrowd:pdfcrowd:4.3.3</last-edited>
+          <last-edited>com.pdfcrowd:pdfcrowd:4.3.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

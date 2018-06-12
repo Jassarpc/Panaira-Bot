@@ -4,6 +4,7 @@ import com.madageekscar.panaira.results.GoogleResult;
 import com.madageekscar.panaira.results.YoutubeResult;
 import com.madageekscar.panaira.searchengine.GoogleSearch;
 import com.madageekscar.panaira.searchengine.YoutubeSearch;
+import com.madageekscar.panaira.utils.LinkFetcher;
 import com.pdfcrowd.Pdfcrowd;
 import com.restfb.*;
 import com.restfb.types.GraphResponse;
@@ -85,7 +86,7 @@ public class Webhook extends HttpServlet {
                                 //notImplementedYet(recipient, "YOUTUBE KO" +" => " + keyword);
                             }
                             else {
-                                showGoogleResults(recipient, GoogleSearch.search(keyword, 2));
+                                showGoogleResults(recipient, GoogleSearch.search(keyword, 1));
                                 //notImplementedYet(recipient, "GOOGLE KO !! => "+ keyword);
                             }
 
@@ -153,6 +154,7 @@ public class Webhook extends HttpServlet {
 
         Bubble resultBubble;
         WebButton webButton;
+        //PostbackButton getPdfButton = new PostbackButton("GET PDF", "GET_PDF");
 
         for (GoogleResult g : results) {
 
@@ -161,10 +163,12 @@ public class Webhook extends HttpServlet {
                 resultBubble = new Bubble(g.getTitle());
                 resultBubble.setImageUrl("https://lazandraha.com/google-logo.jpg");
                 webButton = new WebButton("View", g.getUrl());
-
-                getPdfFromGoogleSearch(g.getUrl());
-
                 resultBubble.addButton(webButton);
+
+                webButton = new WebButton("GET PDF", getPdfFromGoogleSearch(g.getUrl()));
+                resultBubble.addButton(webButton);
+
+                //resultBubble.addButton(getPdfButton);
                 payload.addBubble(resultBubble);
             }
         }
@@ -237,26 +241,10 @@ public class Webhook extends HttpServlet {
 
     }
 
-    private void getPdfFromGoogleSearch(String url)  {
-        try {
-            // create the API client instance
-            Pdfcrowd.HtmlToPdfClient client = new Pdfcrowd.HtmlToPdfClient("nichiren", "5a192975363581bcf8df30f574be14f6 ");
+    private String getPdfFromGoogleSearch(String url)  {
 
-            // run the conversion and write the result to a file
-            client.convertUrlToFile(url, "/example.pdf");
-        }
-        catch(Pdfcrowd.Error why) {
-            // report the error
-            System.err.println("Pdfcrowd Error: " + why);
+        return LinkFetcher.fetch(url);
 
-            // handle the exception here or rethrow and handle it at a higher level
-            throw why;
-        }
-        catch(IOException why) {
-            // report the error
-            System.err.println("IO Error: " + why.getMessage());
-
-        }
     }
 
 

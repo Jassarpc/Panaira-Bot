@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.pdfcrowd:pdfcrowd:4.3.2" type="repository">
+    <properties maven-id="com.pdfcrowd:pdfcrowd:4.3.2" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/pdfcrowd-4.3.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/pdfcrowd-4.3.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
